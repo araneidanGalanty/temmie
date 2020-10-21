@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <style>
+      .btn-group .button {
+      background-color: #004182; /* Green */
+      border: 1px solid green;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      cursor: pointer;
+      width: 150px;
+      display: block;
+      }
+  
+      .btn-group .button:not(:last-child) {
+          border-bottom: none; /* Prevent double borders */
+      }
+      
+      .btn-group .button:hover {
+          background-color: #008282;
+      }
+      
+      input[type=text] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        border: 1px solid #555;
+        outline: none;
+      }
+      
+      input[type=text]:focus {
+        background-color: lightblue;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Status Editor (does not work/sync)</h2>
+    <p>ENTRIES ARE NUMBERED BY ROW (All entries start at 2)</p>
+    <form>
+      <input type="text" name="statusTargetCells" placeholder="Format: 2-10;12;15">
+    
+      <div class="btn-group">
+        <button class="button" onClick="statusSubmit(0)">Approve</button>
+        <button class="button" onClick="statusSubmit(1)">Pend</button>
+        <button class="button" onClick="statusSubmit(2)">Deny</button>
+      </div>
+    <hr>
+    <h2>Manage Student Sheets</h2>
+      <div class="btn-group">
+        <button class="button" onClick="createStudentSheets()">Regenerate Student Sheets</button>
+        <button class="button" onClick="syncStudentSheets()">syncStudentSheets()</button>
+      </div>
+    <hr>
+    <h2>Signature Operations</h2>
+      <div class="btn-group">
+        <input type="text" name="amountOfSignatures" placeholder="Format: 1;42;69;1337">
+        
+        <button class="button" onClick="generateSignatures()">Generate Signatures</button>
+      </div>
+    </form>
+  </body>
+  <script type="text/javascript">
+    function statusSubmit(mode) {
+      switch(mode) {
+        case 0:
+          google.script.run.approveEntry(document.forms[0]);
+          break;
+        case 1:
+          google.script.run.pendEntry(document.forms[0]);
+          break;
+        case 2:
+          google.script.run.rejectEntry(document.forms[0]);
+      }
+    }
+    
+    function createStudentSheets() {
+      google.script.run.createStudentSheets();
+    }
+    
+    function syncStudentSheets() {
+      google.script.run.syncStudentSheets();
+    }
+    
+    function generateSignatures() {
+      google.script.run.generateSignatures(document.forms[0]);
+    }
+  </script>
+</html>
+
+
